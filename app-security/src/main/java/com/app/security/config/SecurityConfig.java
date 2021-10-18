@@ -45,8 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/auth/**").permitAll()
-		.antMatchers(HttpMethod.GET).permitAll().anyRequest().authenticated() 
+		http.authorizeRequests().antMatchers(HttpMethod.GET).permitAll()
+	    .and().authorizeRequests().antMatchers("/auth/**").permitAll()
+		.anyRequest().authenticated() 
 		.and().exceptionHandling().and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -60,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 
 	
-	   @Bean()
+	   @Bean
 	    @Override
 	    public AuthenticationManager authenticationManagerBean() throws Exception {
 	        return super.authenticationManagerBean();

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import org.springframework.web.cors.CorsConfiguration;
@@ -19,9 +21,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.app.repository.UserRepository;
 
+
 @SpringBootApplication
 
-public class AppSpringBoot  {
+public class AppSpringBoot  extends SpringBootServletInitializer {
 	
 	@Autowired
 	private UserRepository repo;
@@ -30,6 +33,12 @@ public class AppSpringBoot  {
 		
 		SpringApplication.run(AppSpringBoot.class, args);
 		
+	}
+	
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		
+		return builder.sources(AppSpringBoot.class);
 	}
 
 	//@Bean
@@ -44,7 +53,7 @@ public class AppSpringBoot  {
 	
 	
 	
-	   @Bean
+	 @Bean
 		public CorsFilter corsFilter() {
 			CorsConfiguration corsConfiguration = new CorsConfiguration();
 			corsConfiguration.setAllowCredentials(true);

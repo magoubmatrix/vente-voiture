@@ -18,11 +18,14 @@
     <version>2.4.4</version>
 </dependency>
   
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.20</version>
+    <scope>provided</scope>
+</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -41,5 +44,6 @@
   	<module>app-security</module>
   	<module>app-mail</module>
   	<module>app-service</module>
+  	<module>app-kafka</module>
   </modules>
 </project>

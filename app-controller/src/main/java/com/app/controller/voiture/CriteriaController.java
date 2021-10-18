@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.criteria.SearchCriteria;
 import com.app.entity.Voiture;
-import com.app.service.voiture.SearchCriteria;
-import com.app.service.voiture.ServiceVoitureCriteria;
+import com.app.services.ServiceVoitureCriteria;
+
 
 @RestController
 @RequestMapping("/criteria")
@@ -34,6 +35,8 @@ public class CriteriaController {
 	                  matcher.group(2), matcher.group(3)));
 	            }
 	            
+	          params.forEach(System.out::println);
+	                  
 	           
 	        }
 	        return serviceVoiture.searchVoiture(params , page,size);

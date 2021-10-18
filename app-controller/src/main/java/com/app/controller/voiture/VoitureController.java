@@ -38,13 +38,12 @@ import com.app.entity.AppUser;
 import com.app.entity.PhotoPrincipale;
 import com.app.entity.Voiture;
 import com.app.entity.VoiturePhoto;
-import com.app.entity.VoitureRecherche;
+
 import com.app.repository.PhotoPrincipaleRepository;
 import com.app.repository.UserRepository;
 import com.app.repository.VoiturePhotoRepository;
 import com.app.repository.VoitureRepository;
-import com.app.service.voiture.SearchCriteria;
-import com.app.service.voiture.ServiceVoitureCriteria;
+
 import com.app.services.ServicePhotoVoiture;
 import com.app.services.ServiceVoiture;
 
@@ -68,7 +67,7 @@ public class VoitureController {
 	@Autowired
     private PhotoPrincipaleRepository repoPhotoPrincipale;
 	
-	
+	//@PreAuthorize("hasRole('ROLE_USER')")
 	@PostMapping("/ajoutVoiture")
 	public String ajoutVoiture(@RequestBody Voiture voiture ) {
 		 String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -205,78 +204,6 @@ public class VoitureController {
 	
 	
 	
-	// get voitures en utilisant jpa repository
-	
-	@GetMapping()
-	public Page<Voiture> findAllCars(@RequestParam  int page ,@RequestParam  int size){
-		return serviceVoiture.findAll(page, size) ;
-	}
-
-	@GetMapping("/voitures")
-	public Page<Voiture> findByAll(@RequestParam String marque, @RequestParam String modele, @RequestParam int immatriculation, @RequestParam double prix, @RequestParam int page ,@RequestParam int size) {
-      
-		return serviceVoiture.findByAll(marque, modele, immatriculation, prix,page,size);
-	}
-
-	@GetMapping("/voituresParModeleEtPrix")
-	public Page<Voiture> findByMarqueAndModeleAndPrixMax( @RequestParam String marque, @RequestParam String modele, @RequestParam double prixMax  ,@RequestParam int page ,@RequestParam int size ) {
-	    
-		return serviceVoiture.findByMarqueAndModeleAndPrixMax(marque, modele, prixMax,page,size);
-	}
-
-
-	@GetMapping("/voituresParMarque")
-	public Page<Voiture> findByMarque(@RequestParam String marque , @RequestParam double prixMax  ,@RequestParam int page ,@RequestParam int size) {
-	   
-	  return  serviceVoiture.findByMarque(marque, page, size);
-		//return serviceVoiture.findByMarque(marque);
-	}
-
-	
-	@GetMapping("/voituresParMarqueEtImmaticul")
-	public Page<Voiture> findByMarqueAndImmatriculation(@RequestParam String marque, @RequestParam int immatriculation, @RequestParam double prixMax  ,@RequestParam int page ,@RequestParam int size) {
-		
-		return serviceVoiture.findByMarqueAndImmatriculation(marque, immatriculation,page,size);
-	}
-
-	
-	@GetMapping("/voituresParMarqueEtModele")
-	public Page<Voiture>findByMarqueAndModele(@RequestParam String marque, @RequestParam String modele,  @RequestParam double prixMax  ,@RequestParam int page ,@RequestParam int size) {
-
-		return serviceVoiture.findByMarqueAndModele(marque, modele,page,size);
-	}
-
-	@GetMapping("/voituresParMarqueEtModeleEtImmatricul")
-	public Page<Voiture> findByMarqueAndModeleAndImmatriculation(@RequestParam String marque, @RequestParam String modele, @RequestParam int immatriculation, @RequestParam double prixMax  ,@RequestParam int page ,@RequestParam int size) {
-		
-		return serviceVoiture.findByMarqueAndModeleAndImmatriculation(marque, modele, immatriculation,page,size);
-	}
-
-	@GetMapping("/voituresParMarqueEtImmatriculEtPrix")
-	public Page<Voiture> findByMarqueAndImmatriculationAndPrixMax(@RequestParam String marque,  @RequestParam int immatriculation, @RequestParam double prixmax, @RequestParam double prixMax  ,@RequestParam int page ,@RequestParam int size) {
-		
-		return serviceVoiture.findByMarqueAndImmatriculationAndPrixMax(marque, immatriculation, prixmax,page,size);
-	}
-
-	@GetMapping("/voituresParImmatricul")
-	public Page<Voiture> findByImmatriculation(@RequestParam String immatriculation ,@RequestParam int page , @RequestParam int size) {
-		
-		return serviceVoiture.findByImmatriculation(immatriculation,page,size);
-	}
-
-	@GetMapping("/voituresParImmatriculEtPrix")
-	public Page<Voiture> findByImmatriculationAndPrixMax(@RequestParam int immatriculation, @RequestParam double prix ,@RequestParam int page , @RequestParam int size) {
-	
-		return serviceVoiture.findByImmatriculationAndPrixMax(immatriculation, prix,page,size);
-	}
-
-	@GetMapping("/voituresParPrix")
-	public Page<Voiture> findByPrixMax(@RequestParam double prixmax ,@RequestParam int page , @RequestParam int size) {
-		
-		return serviceVoiture.findByPrixMax(prixmax,page,size);
-	}
-	
-	
 	
 	// nombre des voitures par catacterestiques
 	
@@ -286,73 +213,7 @@ public class VoitureController {
 		return serviceVoiture.countAll();
 	}
 
-	@GetMapping("/nbrParMarque")
-	public long countByMarque( @RequestParam String marque) {
-		
-		return serviceVoiture.countByMarque(marque);
-	}
-
-	@GetMapping("/nbrParMarqueEtModele")
-	public long countByMarqueAndModele(  @RequestParam String marque, @RequestParam String modele) {
-		
-		return serviceVoiture.countByMarqueAndModele(marque, modele);
-	}
-
-	@GetMapping("/nbrParMarqueEtImmatricul")
-	public long countByMarqueAndImmatriculation( @RequestParam String marque,@RequestParam int immatriculation) {
 	
-		return serviceVoiture.countByMarqueAndImmatriculation(marque, immatriculation);
-	}
-
-	@GetMapping("/nbrParMarqueEtPrix")
-	public long countByMarqueAndPrixmax( @RequestParam String marque, @RequestParam double prixmax) {
-		
-		return serviceVoiture.countByMarqueAndPrixmax(marque, prixmax);
-	}
-
-	@GetMapping("/nbrParMarqueEtModeleEtImmaticul")
-	public long countByMarqueAndModeleAndImmatriculation( @RequestParam String marque, @RequestParam String modele, @RequestParam int immatriculation) {
-		
-		return serviceVoiture.countByMarqueAndModeleAndImmatriculation(marque, modele, immatriculation);
-	}
-	
-	@GetMapping("/nbrParMarqueEtModeleEtPrixmax")
-	public long countByMarqueAndModeleAndprix( @RequestParam String marque, @RequestParam String modele, @RequestParam long prixmax) {
-		
-		return serviceVoiture.countByMarqueAndModeleAndPrix(marque, modele, prixmax);
-	}
-	
-	
-
-	@GetMapping("/nbrParMarqueEtImmatriculEtPrix")
-	public long countBymarqueAndImmatriculationAndPrixmax(@RequestParam String marque, @RequestParam int immatriculation, @RequestParam double prixmax) {
-		
-		return serviceVoiture.countBymarqueAndImmatriculationAndPrixmax(marque, immatriculation, prixmax);
-	}
-
-	@GetMapping("/nbrTotal")
-	public long countByAll( @RequestParam String marque, @RequestParam String modele, @RequestParam int immatriculation, @RequestParam double prixmax) {
-		
-		return serviceVoiture.countByAll(marque, modele, immatriculation, prixmax);
-	}
-
-	@GetMapping("/nbrParImmatriculEtPrix")
-	public long countByimmatriculationAndPrix(@RequestParam int immatriculation, @RequestParam double prix) {
-	
-		return serviceVoiture.countByimmatriculationAndPrix(immatriculation, prix);
-	}
-
-	@GetMapping("/nbrParImmatricul")
-	public long countByImmatriculation(@RequestParam int immatriculation) {
-		
-		return serviceVoiture.countByImmatriculation(immatriculation);
-	}
-
-	@GetMapping("/nbrParprix")
-	public long countByPrixmax(@RequestParam double prixmax) {
-		
-		return serviceVoiture.countByPrixmax(prixmax);
-	}
 	
 	@GetMapping("/marques")
 	public List<String> findAllMarque(){
@@ -374,15 +235,11 @@ public class VoitureController {
 	
 	
 	
-	
-// la methode qui retourne la list des voiture de recherche
-	
+
 	
 	
-	@GetMapping("/recherche")
-	public List<VoitureRecherche> mapVoitureToVoitureRecherche(){
-		return serviceVoiture.mapToVoitureRecheche();
-	}
+	
+	
 	
 	// suppression voiture par id 
 	

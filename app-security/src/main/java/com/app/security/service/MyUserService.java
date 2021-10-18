@@ -31,12 +31,11 @@ public class MyUserService implements UserDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		  Optional<AppUser> user = repo.findByUsername(username);
-			AppUser appUser = user.orElseThrow(() -> new UsernameNotFoundException(String.format("le username %s est invalide", username)));
+			AppUser appUser = repo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("le username %s est invalide", username)));
 		return new User(username, appUser.getPassword(),getAuthorities(appUser));
 	}
 
-	private Collection<GrantedAuthority> getAuthorities(AppUser user){
+	private Collection<? extends GrantedAuthority> getAuthorities(AppUser user){
 		String role = user.getRole().name();
 		return List.of(new SimpleGrantedAuthority(role));
 	}

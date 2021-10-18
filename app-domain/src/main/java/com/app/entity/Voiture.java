@@ -16,16 +16,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 @Entity
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Voiture {
 
 	
@@ -51,8 +49,9 @@ public class Voiture {
 	private String modele;
 
 	
-	private Calendar immatriculation;
-
+	private Calendar immatriculation ;
+    
+	private Integer anneeImmatricul  ;
 	
 	private String couleur;
 	
@@ -70,6 +69,23 @@ public class Voiture {
 	private double prix;
 	
 	
+	
+	public Voiture(String marque, String modele, Calendar immatriculation, double prix) {
+		super();
+		this.marque = marque;
+		this.modele = modele;
+		this.immatriculation = immatriculation;
+		this.prix = prix;
+	}
+
+	
+
+	public Voiture() {
+		super();
+	}
+
+
+
 	public List<VoiturePhoto> getPhotos() {
 		return photos;
 	}
@@ -200,6 +216,21 @@ public class Voiture {
 	public void setPhotoPrincipale(PhotoPrincipale photoPrincipale) {
 		this.photoPrincipale = photoPrincipale;
 	}
+
+   
+	
+	public void setAnneeImmatricul(Integer anneeImmatricul) {
+		this.anneeImmatricul = anneeImmatricul;
+	}
+
+
+
+	public Integer getAnneeImmatricul() {
+		return  anneeImmatricul ;
+	}
+
+
+	
 	
 	
 
